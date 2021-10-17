@@ -1,0 +1,75 @@
+// ------------------------------------------------------------------
+// file:   demangled.h
+// desc:   example file for creating executeable's for Windows 10 Pro.
+//         with the AsmJit by:
+//         available under:
+//
+// autor:  Jens Kallup - <kallup.jens@web.de>
+//         kallup.net * non-profit
+// date:   2021-10-12
+//
+// policy: only for education usage !!! - no commercial use allowed.
+//         free to distribute if copyright notice is intact.
+// ------------------------------------------------------------------
+#pragma once
+#ifndef  DEMANGLED_H_
+# define DEMANGLED_H_
+
+# define USE_BOOST 0
+
+# include "kallup/common.h"
+
+namespace kallup {
+// -------------------------------------------------------------
+// utilities to demangle c++ function members:
+// -------------------------------------------------------------
+typedef int (__stdcall* func_ptr_t)();
+
+#if defined(BOOST == 1)
+// boost.program_options.dll
+inline ::std::string boost_prefix() { return ::std::string("boost"             ); }
+inline ::std::string boost_wr    () { return ::std::string("wrapexceptINS"     ); }
+inline ::std::string boost_po    () { return ::std::string("program_options"   ); }
+inline ::std::string boost_po_od () { return ::std::string("option_description"); }
+inline ::std::string boost_po_rf () { return ::std::string("reading_file"      ); }
+inline ::std::string boost_po_uo () { return ::std::string("unknown_option"    ); }
+inline ::std::string boost_po_mv () { return ::std::string("multiple_values"   ); }
+inline ::std::string boost_po_ro () { return ::std::string("required_option"   ); }
+
+enum uint8_t SymbolTypes {
+	zN = 1    // _ZN = namespace
+}
+SymbolTypes ST;
+
+::std::map<
+	uint8_t,							// symbol type
+	::std::vector<                  	// container
+		::std::map<
+			::std::map<
+				uint8_t,         		// length
+				::std::string    		// name
+			>
+		>,
+		::std::map< 					// magled parameter
+			uint8_t,
+			::std::string
+		>
+	>
+>
+DLL_MEMBERS = {
+	{	ST::zN,							//           map 1
+		{
+			{								// vector -> map 1
+				{ 5, boost_prefix() },		//           map 0
+				{10, boost_we    () }
+			},
+			{								//			 map 2
+				"Ev", "string"
+			}
+		}
+	}
+};		// DLL_MEMBERS
+#endif
+
+};      // namespace: kallup
+#endif  // #ifdef:    DEMANGLED_H_

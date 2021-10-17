@@ -1,0 +1,7 @@
+# Verteiltes rechnen im Rechnerverbund.
+# Copyright (c) 2021 Jens Kallup - paule32
+# This file is distributed under the same license as the winperm 1.0 package.
+# Jens Kallup <kallup.jens@web.de>, 2021.
+
+msgid "HELLO"
+msgstr "halpllo"
